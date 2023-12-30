@@ -107,8 +107,6 @@ function gameLoop() {
     colourDead();
 }
 
-let testing = setInterval(getAllNeighbours, 100);
-
 let gameId;
 
 startButton.addEventListener('click', () => {
