@@ -184,13 +184,11 @@ randomButton.addEventListener('click', function() {
 });
 
 timerField.addEventListener('input', function() {
-    let ms = Number(timerField.value);
-    console.log(ms);
-    if (ms > 5 && ms < 100000) {
-        TIMER = ms;
-    }
+    let ms = Number(timerField.value*20);
+    TIMER = ms;
     clearInterval(gameId);
     gameId = setInterval(gameLoop, TIMER);
+    console.log(TIMER);
 });
 
 createGrid(DIMENSION);

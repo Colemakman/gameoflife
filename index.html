@@ -4,6 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="style.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap" rel="stylesheet">
     <title>Game of Life</title>
 </head>
 <body>
@@ -16,8 +19,14 @@
     <div class="board"></div>
 
     <div class="input-container">
+
+        <div class="time-slider">
+            <h5>Time interval:</h5>
+            <input type="range" class="timer">
+        </div>
+
         <input type="text" class="dimension" placeholder="X by X">
-        <input type="text" class="timer" placeholder="Time between step in ms">
+
         <div class="random-slider">
             <h5>Random density:</h5>
             <input type="range" class="randomness">
