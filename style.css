@@ -22,8 +22,8 @@ body {
 
 .board {
     border: 0.1px solid rgba(128, 128, 128, 0.5);
-    width: 400px;
-    height: 400px;
+    width: 600px;
+    height: 600px;
     flex-wrap: wrap;
     display: flex;
 }
