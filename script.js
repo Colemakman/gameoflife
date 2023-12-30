@@ -2,6 +2,7 @@ let startButton = document.querySelector('.start');
 let resetButton = document.querySelector('.reset');
 let inputField = document.querySelector('.dimension');
 let randomButton = document.querySelector('.random');
+let timerField = document.querySelector('.timer');
 let board = document.querySelector('.board');
 
 class Square {
@@ -27,13 +28,12 @@ class Square {
 }
 
 let grid = [];
-let DIMENSION = 4
+let DIMENSION = 5;
+let TIMER = 1000;
 
 function changeGridDimension(dimension) {
     let r = document.querySelector(':root');
     r.style.setProperty("--size", `${100*(1/dimension)}%`);
-    console.log("Size:", getComputedStyle(r).getPropertyValue('--size'));
-    console.log(`${100*(1/dimension)}%`);
 }
 
 
@@ -49,25 +49,20 @@ function getNeighbours(square) {
     let thisX = square.x;
     let thisY = square.y;
 
-    const directions = [
-        { dx: -1, dy: -1 }, { dx: 0, dy: -1 }, { dx: 1, dy: -1 },
-        { dx: -1, dy: 0 }, /* Current square */ { dx: 1, dy: 0 },
-        { dx: -1, dy: 1 }, { dx: 0, dy: 1 }, { dx: 1, dy: 1 }
-    ];
-
-    directions.forEach(dir => {
-        const newX = thisX + dir.dx;
-        const newY = thisY + dir.dy;
-
-        grid.forEach(square => {
-            if (square.x === newX && square.y === newY && square.status === 1) {
-                neighbours++;
-            }
-        });
+    grid.forEach(s => {
+        if (
+            Math.abs(thisX - s.x) <= 1 &&
+            Math.abs(thisY - s.y) <= 1 &&
+            s.status === 1 &&
+            (thisX !== s.x || thisY !== s.y)
+        ) {
+            neighbours++;
+        }
     });
 
     return neighbours;
 }
+
 
 function colourDead() {
     grid.forEach(square => {
@@ -98,15 +93,13 @@ function killPopulus() {
 function populate() {
     grid.forEach(square => {
         if (square.status === 0 && square.neighbours === 3) {
-            square.status = 3;
+            square.status = 1;
             square.obj.style.backgroundColor = "black";
         }
     });
 }
 
 function gameLoop() {
-    hasStarted = true;
-    getAllNeighbours();
     getAllNeighbours();
     killLonely();
     killPopulus();
@@ -114,10 +107,12 @@ function gameLoop() {
     colourDead();
 }
 
+let testing = setInterval(getAllNeighbours, 100);
+
 let gameId;
 
 startButton.addEventListener('click', () => {
-    gameId = setInterval(gameLoop, 1000);
+    gameId = setInterval(gameLoop, 1000)
 });
 
 function reset() {
@@ -175,7 +170,6 @@ inputField.addEventListener('input', function() {
      if (Number(inputField.value) >= 1 && Number(inputField.value) <= 100) {
         changeGridDimension(Number(inputField.textContent));
         DIMENSION = Number(inputField.value);
-        console.log([DIMENSION, inputField.value]);
         reset();
      }
      
@@ -185,11 +179,20 @@ randomButton.addEventListener('click', function() {
     let randomDensity = parseFloat(document.querySelector('.randomness').value) / 100;
     grid.forEach(square => {
         if (Math.random() < randomDensity) {
-            console.log("HELLO");
             square.obj.style.backgroundColor = "black";
             square.status = 1;
         }
     });
+});
+
+timerField.addEventListener('input', function() {
+    let ms = Number(timerField.value);
+    console.log(ms);
+    if (ms > 5 && ms < 100000) {
+        TIMER = ms;
+    }
+    clearInterval(gameId);
+    gameId = setInterval(gameLoop, TIMER);
 });
 
 createGrid(DIMENSION);
