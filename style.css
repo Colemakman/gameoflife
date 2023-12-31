@@ -4,7 +4,6 @@
 }
 
 * {
-    font-family: 'Roboto', sans-serif;
     box-sizing: border-box;
     margin: 0;
     padding: 0;
@@ -27,6 +26,7 @@ body {
     height: 600px;
     flex-wrap: wrap;
     display: flex;
+    flex: 1 0 1;
 }
 
 .square {
@@ -43,4 +43,10 @@ body {
     display: flex;
     gap: 30px;
     justify-content: space-evenly;
+}
+
+.board-container {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
 }

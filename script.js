@@ -28,7 +28,7 @@ class Square {
 }
 
 let grid = [];
-let DIMENSION = 5;
+let DIMENSION = 10;
 let TIMER = 1000;
 
 function changeGridDimension(dimension) {
